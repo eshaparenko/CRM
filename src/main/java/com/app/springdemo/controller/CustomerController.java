@@ -2,7 +2,6 @@ package com.app.springdemo.controller;
 
 import com.app.springdemo.dao.CustomerDAO;
 import com.app.springdemo.entity.Customer;
-import jdk.nashorn.internal.objects.annotations.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

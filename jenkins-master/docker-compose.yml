@@ -1,0 +1,31 @@
+version: '2.1'
+services:
+  master:
+    container_name: jenkins-master
+    build: .
+    ports:
+    - "8081:8080"
+    volumes:
+    - jenkins-log:/var/log/jenkins
+    - jenkins-data:/var/jenkins_home
+    networks:
+    - my-custom-net
+  slave:
+    build: ../jenkins-slave
+  proxy:
+    image: ehazlett/docker-proxy:latest
+    command: -i
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      my-custom-net:
+        aliases:
+          - proxy1
+
+
+networks:
+  my-custom-net:
+    external: true
+volumes:
+  jenkins-log:
+  jenkins-data:

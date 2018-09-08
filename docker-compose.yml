@@ -1,0 +1,53 @@
+version: '2.1'
+services:
+  master:
+    container_name: jenkins-master
+    build: ./jenkins-master
+    ports:
+    - "8081:8080"
+    volumes:
+    - jenkins-log:/var/log/jenkins
+    - jenkins-data:/var/jenkins_home
+    networks:
+    - my-custom-net
+  web:
+    depends_on:
+      db:
+        condition: service_healthy
+    container_name: my-web-container
+    image: tomcat
+    ports:
+    - "8080:8080"
+    volumes:
+    - ./target/customerManagement.war:/usr/local/tomcat/webapps/ROOT.war
+    - ./target/customerManagement:/usr/local/tomcat/webapps/ROOT
+    networks:
+    - my-custom-net
+    tty: true
+  db:
+    image: mysql/mysql-server:latest
+    container_name: mysql1
+    ports:
+    - "3306:3306"
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: springstudent
+      MYSQL_PASSWORD: springstudent
+    volumes:
+    - ./mysql_data/my.cnf:/etc/my.cnf
+    - ./mysql_data/datadir:/var/lib/mysql
+    - ./mysql_data/sql-scripts:/docker-entrypoint-initdb.d
+    networks:
+    - my-custom-net
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;FLUSH HOSTS;\""
+      interval: 2s
+      timeout: 40s
+      retries: 20
+networks:
+  my-custom-net:
+    external: true
+volumes:
+  jenkins-log:
+  jenkins-data:

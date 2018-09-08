@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>groupId</groupId>
-    <artifactId>solution-code-spring-mvc-CRUD-CRM-setup-and-test</artifactId>
+    <artifactId>CRUD-CRM</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>customer-management</name>
@@ -39,7 +39,11 @@
             <version>2.1</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -93,7 +97,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.6</version>
+            <version>8.0.12</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
